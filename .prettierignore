@@ -5,3 +5,5 @@
 .next
 .vercel
 /out
+
+pnpm-lock.yaml
