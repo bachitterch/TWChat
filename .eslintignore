@@ -5,3 +5,7 @@
 .next
 .vercel
 /out
+
+embed.js
+
+*.d.ts
