@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { styled } from '@stitches/react'
@@ -17,9 +17,17 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData.map(user => user?.userstate.id)])
 
+  const [height, setHeight] = useState(window.innerHeight - 42 - 70)
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setHeight(window.innerHeight - 205)
+    })
+  }, [])
+
   const StyledScrollArea = styled(ScrollArea.Root, {
     height: '100%',
-    maxHeight: window.innerHeight - 42 - 70,
+    maxHeight: height,
     overflow: 'hidden'
   })
 
