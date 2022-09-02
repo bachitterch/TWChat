@@ -18,7 +18,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
   }, [userData.map(user => user?.userstate.id)])
 
   const StyledScrollArea = styled(ScrollArea.Root, {
-    height: window.innerHeight - 42 - 60,
+    height: window.innerHeight - 42 - 70,
     overflow: 'hidden'
   })
 
