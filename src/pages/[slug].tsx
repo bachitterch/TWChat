@@ -4,7 +4,6 @@ import { TextInput } from 'flowbite-react'
 import { GetServerSideProps, NextPage } from 'next'
 import { Session } from 'next-auth'
 import { useSession } from 'next-auth/react'
-import dynamic from 'next/dynamic'
 import { Userstate } from 'tmi.js'
 
 import { ChatBox } from '@components/ChatBox'
@@ -13,15 +12,15 @@ import { parseMessage, tmiClient } from '@lib/tmi'
 import { getStream, getUser } from '@lib/twitch/user'
 import { getServerSession } from '@lib/utils/getServerSession'
 
-const TwitchEmbed = dynamic(() => import('@components/VideoEmbed'), {
-  ssr: false
-})
+// const TwitchEmbed = dynamic(() => import('@components/VideoEmbed'), {
+//   ssr: false
+// })
 
 const Stream: NextPage<Props> = ({ streamData }) => {
   const [userData, setUserData] = useState<UserData[]>([])
   const [msg, setMsg] = useState('')
 
-  const [isMod, setisMod] = useState(false)
+  const [isMod, setIsMod] = useState(false)
 
   const { data: session } = useSession()
   const username = session?.user?.name || ''
@@ -46,9 +45,9 @@ const Stream: NextPage<Props> = ({ streamData }) => {
   const checkMod = () => {
     client.mods(streamer).then(mods => {
       if (mods.includes(username)) {
-        setisMod(true)
+        setIsMod(true)
       } else {
-        setisMod(false)
+        setIsMod(false)
       }
     })
   }

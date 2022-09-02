@@ -1,6 +1,5 @@
 import { Card } from 'flowbite-react'
 import type { GetServerSideProps, NextPage } from 'next'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -9,8 +8,6 @@ import { getFollowedStreams } from '@lib/twitch/user'
 import { getServerSession } from '@lib/utils/getServerSession'
 
 const Streams: NextPage<Props> = ({ streams }) => {
-  const { data: session } = useSession()
-
   const twitchThumbnailLoader = (streamer: string) => {
     return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${streamer}-1920x1080.jpg`
   }
