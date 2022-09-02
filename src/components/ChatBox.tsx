@@ -26,8 +26,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
   }, [])
 
   const StyledScrollArea = styled(ScrollArea.Root, {
-    height: '100%',
-    maxHeight: height,
+    height: height,
     overflow: 'hidden'
   })
 
@@ -41,7 +40,10 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
             })
 
             return (
-              <div key={user.userstate.id} className='flex space-x-2'>
+              <div
+                key={user.userstate.id}
+                className='flex space-x-2 text-sm md:text-base'
+              >
                 <Tag>{user.userstate['display-name']}: </Tag>
                 <span
                   dangerouslySetInnerHTML={{
