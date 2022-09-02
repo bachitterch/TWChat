@@ -40,7 +40,7 @@ export const parseMessage = (message: string, emotes: any) => {
         }
 
         newMessage[emoteIndexes[0]] =
-          '<img class="emoticon w-7 inline-block" src="http://static-cdn.jtvnw.net/emoticons/v1/' +
+          '<img class="emoticon w-7 inline-block" src="https://static-cdn.jtvnw.net/emoticons/v1/' +
           emoteIndex +
           '/3.0">'
       }

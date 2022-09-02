@@ -21,7 +21,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      setHeight(window.innerHeight - 205)
+      setHeight(window.innerHeight - 42 - 70)
     })
   }, [])
 
