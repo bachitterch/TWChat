@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    jwt({ token, user, account }) {
       if (account && user) {
         return {
           ...token,
@@ -62,15 +62,14 @@ export const authOptions: NextAuthOptions = {
 
       return refreshAccessToken(token)
     },
-    async session({ session, token }) {
-      session.user = token.user as any
-      session.accessToken = token.accessToken as string
-      session.error = token.error
-
+    session({ session, token }) {
+      if (session) {
+        session.user = token.user as any
+        session.accessToken = token.accessToken as string
+      }
       return session
     }
   }
-  // secret: process.env.NEXTAUTH_SECRET,
 }
 
 export default NextAuth(authOptions)

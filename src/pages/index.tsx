@@ -1,50 +1,39 @@
-import { NextPage } from 'next'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Button } from 'flowbite-react'
+import { GetServerSideProps, NextPage } from 'next'
+import { signIn, useSession } from 'next-auth/react'
+
+import { Container } from '@components/MainLayout'
+import { getServerSession } from '@lib/utils/getServerSession'
 
 const Home: NextPage = () => {
   const { data: session } = useSession()
 
-  const imagesrc = session?.user?.image || ''
-  const username = session?.user?.name
-  const email = session?.user?.email
-
   return (
-    <div>
-      <h1>Hello Next.js</h1>
-      {session ? (
-        <button onClick={() => signOut()}>Signout</button>
-      ) : (
-        <button
-          onClick={() =>
-            signIn('twitch', {
-              redirect: true
-            })
-          }
-        >
-          SignIn
-        </button>
-      )}
-      {session && (
-        <div>
-          <div>
-            <small>Signed in as</small>
-            <br />
-            <p>{username}</p>
-            <p>{email}</p>
-
-            <Image src={imagesrc} width={100} height={100} alt='twitch' />
-          </div>
-          <div>
-            <Link href='/dashboard'>
-              <a>Streams</a>
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
+    <Container>
+      <div className='w-full h-full flex items-center justify-center'>
+        <Button onClick={() => signIn('twitch')}>SignIn</Button>
+      </div>
+    </Container>
   )
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const session = await getServerSession(context)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
+}
