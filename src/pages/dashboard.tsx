@@ -14,7 +14,7 @@ const Streams: NextPage<Props> = ({ streams }) => {
 
   return (
     <Container>
-      <div className='grid space-y-8'>
+      <div className='grid space-y-8 p-8'>
         {streams.map((stream: StreamData) => {
           return (
             <Link href={`/${stream?.user_login}`} key={stream.id}>
