@@ -33,7 +33,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
   if (typeof window !== 'undefined') {
     return (
       <StyledScrollArea>
-        <ScrollArea.Viewport className='w-full h-full p-2.5 text-sm text-gray-900 bg-white rounded-lg  dark:bg-gray-800  dark:text-white'>
+        <ScrollArea.Viewport className='w-full h-full max-h-full p-2.5 text-sm text-gray-900 bg-white rounded-lg  dark:bg-gray-800  dark:text-white'>
           {userData.map(user => {
             const Tag = styled('span', {
               color: user.userstate.color

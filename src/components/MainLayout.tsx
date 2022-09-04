@@ -19,7 +19,7 @@ export const Container: FC<ContainerProps> = ({ children }) => {
       <header className='mx-auto w-full max-w-2xl flex-col'>
         {session && <Nav />}
       </header>
-      <main className='mx-auto flex w-full max-w-2xl flex-col h-full'>
+      <main className='mx-auto flex w-full max-w-2xl flex-col h-full max-h-full'>
         {children}
       </main>
     </>
