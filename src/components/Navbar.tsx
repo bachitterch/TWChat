@@ -36,22 +36,27 @@ export const Nav: FC<NavProps> = () => {
             align='end'
             className='bg-gray-800 focus-visible:outline-none rounded-md border-gray-700 border'
           >
-            <DropdownMenu.Item className='focus-visible:outline-none p-6'>
+            <DropdownMenu.Item className='focus-visible:outline-none p-2.5'>
               <p>{session?.user.name}</p>
               <p>{session?.user.email}</p>
             </DropdownMenu.Item>
-            <DropdownMenu.Separator className='h-[1px] bg-gray-200' />
+            <DropdownMenu.Separator className='h-[1px] bg-gray-200/40' />
 
             <DropdownMenu.Group>
-              <DropdownMenu.Item className='focus-visible:outline-none'>
+              <DropdownMenu.Item className='focus-visible:outline-none p-2.5'>
                 <Link href='/'>
                   <a>Dashboard</a>
                 </Link>
               </DropdownMenu.Item>
             </DropdownMenu.Group>
+            <DropdownMenu.Separator className='h-[1px] bg-gray-200/40' />
             <DropdownMenu.Group>
-              <DropdownMenu.Item className='focus-visible:outline-none'>
-                <DarkModeToggle />
+              <DropdownMenu.Item className='focus-visible:outline-none p-2.5 flex items-center space-x-2'>
+                <span>Theme:</span>
+                <span className='inline-block w-full '>
+                  {' '}
+                  <DarkModeToggle />
+                </span>
               </DropdownMenu.Item>
             </DropdownMenu.Group>
           </DropdownMenu.Content>

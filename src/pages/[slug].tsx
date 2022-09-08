@@ -153,7 +153,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (session) {
     const streamerData = await getUser(slug, accessToken)
 
-    const streamData = await getStream(streamerData[0].id, accessToken)
+    const streamData = await getStream(streamerData[0]?.id, accessToken)
 
     return {
       props: {
