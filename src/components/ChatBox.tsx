@@ -52,7 +52,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData, isMod }) => {
               </div>
             )
           })}
-          <div ref={ref} className='w-full'></div>
+          <div ref={ref} className='w-full h-1'></div>
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar orientation='vertical'>
           <ScrollArea.Thumb />
