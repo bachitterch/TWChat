@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 import { NextPage } from 'next'
 import { Session } from 'next-auth'
@@ -81,7 +81,7 @@ const Stream: NextPage<Props> = () => {
             <TwitchEmbed channel={streamData[0]?.user_login} />
           </div> */}
 
-          <ChatBox userData={userData}></ChatBox>
+          <ChatBox isMod={isMod} userData={userData}></ChatBox>
 
           <form
             className='absolute bottom-0 inset-x-0 w-full mx-auto max-w-2xl'

@@ -4,14 +4,12 @@ import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { styled } from '@stitches/react'
 import { Userstate } from 'tmi.js'
 
-export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
+export const ChatBox: FC<ChatBoxProps> = ({ userData, isMod }) => {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.scrollIntoView({
-        behavior: 'smooth'
-      })
+      ref.current.scrollIntoView()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData.map(user => user?.userstate.id)])
@@ -25,14 +23,15 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
   }, [height])
 
   const StyledScrollArea = styled(ScrollArea.Root, {
-    height: height,
+    maxHeight: height,
+    height: '100%',
     overflow: 'hidden'
   })
 
   if (typeof window !== 'undefined') {
     return (
       <StyledScrollArea>
-        <ScrollArea.Viewport className='w-full h-full max-h-full p-2.5 text-sm text-gray-900 bg-white rounded-lg  dark:bg-gray-800  dark:text-white'>
+        <ScrollArea.Viewport className='w-full h-full p-2.5 text-sm text-gray-900 bg-white rounded-lg  dark:bg-gray-800  dark:text-white'>
           {userData.map(user => {
             const Tag = styled('span', {
               color: user.userstate.color
@@ -43,6 +42,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
                 key={user.userstate.id}
                 className='flex space-x-2 text-sm md:text-base'
               >
+                <div>{isMod && ''}</div>
                 <Tag>{user.userstate['display-name']}: </Tag>
                 <span
                   dangerouslySetInnerHTML={{
@@ -67,6 +67,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
 
 interface ChatBoxProps {
   userData: UserData
+  isMod: Boolean
 }
 
 type UserData = {
