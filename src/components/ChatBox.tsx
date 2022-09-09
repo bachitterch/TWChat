@@ -10,8 +10,7 @@ export const ChatBox: FC<ChatBoxProps> = ({ userData }) => {
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end'
+        behavior: 'smooth'
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

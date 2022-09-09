@@ -1,21 +1,20 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage } from 'next'
 import { Session } from 'next-auth'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { Userstate } from 'tmi.js'
 
 import { ChatBox } from '@components/ChatBox'
 import { Container } from '@components/MainLayout'
 import { parseMessage, tmiClient } from '@lib/tmi'
-import { getStream, getUser } from '@lib/twitch/user'
-import { getServerSession } from '@lib/utils/getServerSession'
 
 // const TwitchEmbed = dynamic(() => import('@components/VideoEmbed'), {
 //   ssr: false
 // })
 
-const Stream: NextPage<Props> = ({ streamData }) => {
+const Stream: NextPage<Props> = () => {
   const [userData, setUserData] = useState<UserData[]>([])
   const [msg, setMsg] = useState('')
 
@@ -23,16 +22,18 @@ const Stream: NextPage<Props> = ({ streamData }) => {
 
   const { data: session } = useSession()
   const username = session?.user?.name || ''
-  const streamer: string = streamData[0]?.user_name || ''
 
-  const client = tmiClient(streamer, session as Session)
+  const router = useRouter()
+  const slug = router?.query?.slug as string
+
+  const client = tmiClient(slug, session as Session)
 
   useEffect(() => {
     client.on('connected', () => {
       checkMod()
     })
 
-    client.on('chat', (channel, userstate, message) => {
+    client.on('chat', (_, userstate, message) => {
       const emotes = userstate.emotes
       const parsedMessages = parseMessage(message, emotes)
       updateUserData(parsedMessages, userstate)
@@ -42,7 +43,7 @@ const Stream: NextPage<Props> = ({ streamData }) => {
   }, [])
 
   const checkMod = () => {
-    client.mods(streamer).then(mods => {
+    client.mods(slug).then(mods => {
       if (mods.includes(username)) {
         setIsMod(true)
       } else {
@@ -53,7 +54,7 @@ const Stream: NextPage<Props> = ({ streamData }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    client.say(streamer, msg)
+    client.say(slug, msg)
     setMsg('')
   }
 
@@ -65,10 +66,6 @@ const Stream: NextPage<Props> = ({ streamData }) => {
   }
 
   client.connect()
-
-  if (streamData.length === 0) {
-    return <Container>User is not live</Container>
-  }
 
   if (!session) {
     return <Container>Unauthroized</Container>
@@ -144,31 +141,6 @@ const Stream: NextPage<Props> = ({ streamData }) => {
   )
 }
 export default Stream
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const session = await getServerSession(context)
-  const accessToken = session?.accessToken as string
-  const slug = context?.query.slug as string
-
-  if (session) {
-    const streamerData = await getUser(slug, accessToken)
-
-    const streamData = await getStream(streamerData[0]?.id, accessToken)
-
-    return {
-      props: {
-        streamData
-      }
-    }
-  }
-
-  return {
-    redirect: {
-      destination: '/',
-      permanent: false
-    }
-  }
-}
 
 type Props = {
   session: Session

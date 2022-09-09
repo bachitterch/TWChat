@@ -8,7 +8,7 @@ const withPWA = require('next-pwa')({
 })
 
 module.exports = withPWA({
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   images: {
     domains: ['api.twitch.tv', 'static-cdn.jtvnw.net']
