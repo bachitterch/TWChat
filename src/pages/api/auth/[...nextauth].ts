@@ -1,26 +1,26 @@
-import NextAuth, { NextAuthOptions } from 'next-auth'
-import Twitch from 'next-auth/providers/twitch'
+import NextAuth, { NextAuthOptions } from "next-auth";
+import Twitch from "next-auth/providers/twitch";
 
 async function refreshAccessToken(token: any) {
   const url =
-    'https://id.twitch.tv/oauth2/token?' +
+    "https://id.twitch.tv/oauth2/token?" +
     new URLSearchParams({
       client_id: process.env.TWITCH_CLIENT_ID as string,
       client_secret: process.env.TWITCH_CLIENT_SECRET as string,
-      grant_type: 'refresh_token',
+      grant_type: "refresh_token",
       refresh_token: token.refreshToken as string
-    })
+    });
   const response = await fetch(url, {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      "Content-Type": "application/x-www-form-urlencoded"
     },
-    method: 'POST'
-  })
+    method: "POST"
+  });
 
-  const refreshedTokens = await response.json()
+  const refreshedTokens = await response.json();
 
   if (!response.ok) {
-    throw refreshedTokens
+    throw refreshedTokens;
   }
 
   return {
@@ -28,7 +28,7 @@ async function refreshAccessToken(token: any) {
     accessToken: refreshedTokens.access_token,
     accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
     refreshToken: refreshedTokens.refresh_token ?? token.refreshToken
-  }
+  };
 }
 
 export const authOptions: NextAuthOptions = {
@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           scope:
-            'openid channel:read:redemptions user:read:email chat:read chat:edit channel:moderate whispers:read whispers:edit user:read:follows moderator:manage:automod moderator:manage:banned_users user:read:subscriptions channel:read:hype_train channel:read:polls moderation:read'
+            "openid channel:read:redemptions user:read:email chat:read chat:edit channel:moderate whispers:read whispers:edit user:read:follows moderator:manage:automod moderator:manage:banned_users user:read:subscriptions channel:read:hype_train channel:read:polls moderation:read"
         }
       }
     })
@@ -53,23 +53,23 @@ export const authOptions: NextAuthOptions = {
           accessTokenExpires: account.expires_at,
           refreshToken: account.refresh_token,
           user
-        }
+        };
       }
 
       if (Date.now() < (token.accessTokenExpires as number)) {
-        return token
+        return token;
       }
 
-      return refreshAccessToken(token)
+      return refreshAccessToken(token);
     },
     session({ session, token }) {
       if (session) {
-        session.user = token.user as any
-        session.accessToken = token.accessToken as string
+        session.user = token.user as any;
+        session.accessToken = token.accessToken as string;
       }
-      return session
+      return session;
     }
   }
-}
+};
 
-export default NextAuth(authOptions)
+export default NextAuth(authOptions);

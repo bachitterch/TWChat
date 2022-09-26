@@ -1,5 +1,5 @@
-const TWITCH_API_ENDPOINT = `https://api.twitch.tv/helix/`
-const clientId = process.env.TWITCH_CLIENT_ID as string
+const TWITCH_API_ENDPOINT = `https://api.twitch.tv/helix/`;
+const clientId = process.env.TWITCH_CLIENT_ID as string;
 
 export const deleteMessage = async (
   message_id: string,
@@ -9,39 +9,39 @@ export const deleteMessage = async (
 ) => {
   const url =
     TWITCH_API_ENDPOINT +
-    'moderation/chat?' +
+    "moderation/chat?" +
     new URLSearchParams({
       broadcaster_id: streamer_id,
       moderator_id: moderator_id,
       message_id: message_id
-    })
+    });
 
   const response = await fetch(url, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Client-Id': clientId,
+      "Client-Id": clientId,
       Authorization: `Bearer ${token}`
     }
-  })
+  });
 
   if (response.status === 204) {
-    return { res: 'Message Deleted' }
+    return { res: "Message Deleted" };
   }
 
   if (response.status === 404) {
     return {
-      res: 'Message not found'
-    }
+      res: "Message not found"
+    };
   }
 
   if (response.status === 401) {
     return {
-      res: 'You are not authorized to use this command!'
-    }
+      res: "You are not authorized to use this command!"
+    };
   }
 
-  return response
-}
+  return response;
+};
 
 export const timeoutUser = async (
   user_id: string,
@@ -49,20 +49,20 @@ export const timeoutUser = async (
   moderator_id: string,
   token: string,
   time = 300,
-  reason = ''
+  reason = ""
 ) => {
   const url =
     TWITCH_API_ENDPOINT +
-    'moderation/bans?' +
+    "moderation/bans?" +
     new URLSearchParams({
       broadcaster_id: streamer_id,
       moderator_id: moderator_id
-    })
+    });
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Client-Id': clientId,
+      "Client-Id": clientId,
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
@@ -70,57 +70,57 @@ export const timeoutUser = async (
       duration: time,
       reason: reason
     })
-  })
+  });
 
   if (response.status === 200) {
-    return { res: 'User timed out successfully' }
+    return { res: "User timed out successfully" };
   }
 
   if (response.status === 401) {
     return {
-      res: 'You are not authorized to use this command!'
-    }
+      res: "You are not authorized to use this command!"
+    };
   }
 
-  return response
-}
+  return response;
+};
 
 export const banUser = async (
   user_id: string,
   streamer_id: string,
   moderator_id: string,
   token: string,
-  reason = ''
+  reason = ""
 ) => {
   const url =
     TWITCH_API_ENDPOINT +
-    'moderation/bans?' +
+    "moderation/bans?" +
     new URLSearchParams({
       broadcaster_id: streamer_id,
       moderator_id: moderator_id
-    })
+    });
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Client-Id': clientId,
+      "Client-Id": clientId,
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       user_id: user_id,
       reason: reason
     })
-  })
+  });
 
   if (response.status === 200) {
-    return { res: 'User banned successfully' }
+    return { res: "User banned successfully" };
   }
 
   if (response.status === 401) {
     return {
-      res: 'You are not authorized to use this command!'
-    }
+      res: "You are not authorized to use this command!"
+    };
   }
 
-  return response
-}
+  return response;
+};

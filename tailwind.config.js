@@ -1,11 +1,11 @@
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/flowbite-react/**/*.js'
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite-react/**/*.js"
   ],
   theme: {
     extend: {}
   },
-  plugins: [require('flowbite/plugin')]
-}
+  plugins: [require("flowbite/plugin")]
+};

@@ -4,46 +4,46 @@ module.exports = {
     node: true,
     es2021: true
   },
-  extends: ['next/core-web-vitals', 'prettier', 'eslint:recommended'],
-  parser: '@typescript-eslint/parser',
+  extends: ["next/core-web-vitals", "prettier", "eslint:recommended"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2021,
-    sourceType: 'module',
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true
     }
   },
-  plugins: ['prettier'],
+  plugins: ["prettier"],
   rules: {
-    'import/order': [
-      'error',
+    "import/order": [
+      "error",
       {
-        groups: ['builtin', 'external', 'internal'],
+        groups: ["builtin", "external", "internal"],
         pathGroups: [
           {
-            pattern: 'react',
-            group: 'external',
-            position: 'before'
+            pattern: "react",
+            group: "external",
+            position: "before"
           }
         ],
-        pathGroupsExcludedImportTypes: ['react'],
-        'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: ["react"],
+        "newlines-between": "always",
         alphabetize: {
-          order: 'asc',
+          order: "asc",
           caseInsensitive: true
         }
       }
     ],
-    'no-console': 1,
-    'no-unused-vars': 1,
-    'no-undef': 1,
-    'prettier/prettier': 1,
-    'react/prop-types': 0,
-    'react-hooks/exhaustive-deps': 0
+    "no-console": 1,
+    "no-unused-vars": 1,
+    "no-undef": 1,
+    "prettier/prettier": 1,
+    "react/prop-types": 0,
+    "react-hooks/exhaustive-deps": 0
   },
   settings: {
     react: {
-      version: 'detect'
+      version: "detect"
     }
   }
-}
+};

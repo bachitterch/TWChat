@@ -1,30 +1,30 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode } from "react";
 
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { Avatar } from 'flowbite-react'
-import { useSession } from 'next-auth/react'
-import { default as Link } from 'next/link'
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { Avatar } from "flowbite-react";
+import { useSession } from "next-auth/react";
+import { default as Link } from "next/link";
 
-import { DarkModeToggle } from './DarkThemeToggle'
+import { DarkModeToggle } from "./DarkThemeToggle";
 
 interface NavProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export const Nav: FC<NavProps> = () => {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
-    <nav className='flex justify-between items-center py-2 px-3 bg-gray-50 dark:bg-gray-700'>
+    <nav className="flex justify-between items-center py-2 px-3 bg-gray-50 dark:bg-gray-700">
       <div>
-        <Link href='/'>
+        <Link href="/">
           <a>TWChat</a>
         </Link>
       </div>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className='focus-visible:outline-none'>
+        <DropdownMenu.Trigger className="focus-visible:outline-none">
           <Avatar
-            alt='Nav Menu'
+            alt="Nav Menu"
             img={session?.user.image}
             rounded={true}
             bordered={true}
@@ -33,28 +33,28 @@ export const Nav: FC<NavProps> = () => {
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content
-            align='end'
-            className='bg-gray-800 focus-visible:outline-none rounded-md border-gray-700 border'
+            align="end"
+            className="bg-gray-800 focus-visible:outline-none rounded-md border-gray-700 border"
           >
-            <DropdownMenu.Item className='focus-visible:outline-none p-2.5'>
+            <DropdownMenu.Item className="focus-visible:outline-none p-2.5">
               <p>{session?.user.name}</p>
               <p>{session?.user.email}</p>
             </DropdownMenu.Item>
-            <DropdownMenu.Separator className='h-[1px] bg-gray-200/40' />
+            <DropdownMenu.Separator className="h-[1px] bg-gray-200/40" />
 
             <DropdownMenu.Group>
-              <DropdownMenu.Item className='focus-visible:outline-none p-2.5'>
-                <Link href='/'>
+              <DropdownMenu.Item className="focus-visible:outline-none p-2.5">
+                <Link href="/">
                   <a>Dashboard</a>
                 </Link>
               </DropdownMenu.Item>
             </DropdownMenu.Group>
-            <DropdownMenu.Separator className='h-[1px] bg-gray-200/40' />
+            <DropdownMenu.Separator className="h-[1px] bg-gray-200/40" />
             <DropdownMenu.Group>
-              <DropdownMenu.Item className='focus-visible:outline-none p-2.5 flex items-center space-x-2'>
+              <DropdownMenu.Item className="focus-visible:outline-none p-2.5 flex items-center space-x-2">
                 <span>Theme:</span>
-                <span className='inline-block w-full '>
-                  {' '}
+                <span className="inline-block w-full ">
+                  {" "}
                   <DarkModeToggle />
                 </span>
               </DropdownMenu.Item>
@@ -63,8 +63,8 @@ export const Nav: FC<NavProps> = () => {
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
     </nav>
-  )
-}
+  );
+};
 /* 
  <Navbar>
         <Navbar.Brand href='/'>

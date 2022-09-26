@@ -1,20 +1,20 @@
 /** @type {import('next').NextConfig} */
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
+const withPWA = require("next-pwa")({
+  dest: "public",
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development'
-})
+  disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = withPWA({
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['api.twitch.tv', 'static-cdn.jtvnw.net']
+    domains: ["api.twitch.tv", "static-cdn.jtvnw.net"]
   },
   experimental: {
     legacyBrowsers: false,
     browsersListForSwc: true
   }
-})
+});
